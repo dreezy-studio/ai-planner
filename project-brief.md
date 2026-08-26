@@ -57,9 +57,10 @@ The top level. Annual goals AND the dreams/aspirations layer.
 - `title` — e.g., "Get a new job"
 - `description`
 - `category` — e.g., Personal, Career, Spiritual, Fatherhood, Health, Financial
-- `timeframe` — "annual" | "monthly" | "long-term dream"
+- `timeframe` — "annual" | "monthly" | "long-term" (5-10 yr) | "long-term dream"
 - `parent_goal_id` — lets a monthly goal point at the annual goal it serves (a tab pointing at itself)
 - `status` — active | completed | paused | dropped
+- `weight` — numeric; brain-derived, user-ratified — never a raw user setting
 - `target_date` (optional)
 - `created_at`, `completed_at`
 
@@ -78,6 +79,7 @@ The individual to-dos. Can belong to a milestone, directly to a goal, or to noth
 - `title`
 - `milestone_id` (optional)
 - `goal_id` (optional)
+- `parent_task_id` (optional) — lets a task point at the parent task it's a step of, or a project it belongs to (enables Projects and Steps)
 - `estimated_minutes` (optional) — the AI's rough time estimate
 - `status` — todo | done | dropped
 - `source` — "user" | "ai" — who created it

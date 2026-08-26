@@ -82,6 +82,9 @@ Real integrations (Google/Outlook calendar sync, Apple Reminders, Notion) are v3
 - `journal_entries` gains: `is_private` (true/false) and `raw_stored_locally` (true/false)
 - Add `habits` and `habit_logs` tables as defined above
 - `tasks` gains: `priority` — high | medium | low (optional)
+- `tasks` gains: `parent_task_id` (optional) — enables Projects (multi-session) and Steps under a Task
+- `goals.timeframe` gains: "long-term" (5-10 yr), between Vision/long-term-dream and Annual on the goal ladder
+- `goals` gains: `weight` — numeric; brain-derived, user-ratified — never a raw user setting
 
 ---
 

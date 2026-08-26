@@ -6,6 +6,8 @@
 **Task states:** backlog | ready | done | dropped
 **Priority from Notion:** HIGH · MED · LOW
 
+**Quick wins (<30 min):** Child support proof · Toilet fix
+
 ---
 
 ## Long-term dreams (the horizon)
@@ -91,6 +93,9 @@
 
 **Dreezy Studio / Projects (ready):**
 - MatchRox invoice · Resume · ~~Claude files to Git~~ DONE · ~~Upload goals~~ DONE
+
+**Home (ready):**
+- Toilet fix [both] — HIGH: phantom refills every ~15 min. Fill valve already replaced; likely flapper/flush-valve seal leaking into bowl. Buy flapper (~$10), swap (~20 min); if refills persist, check flush valve seat.
 
 **Anchors:**
 - "It's okay to say no"

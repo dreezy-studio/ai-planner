@@ -1,5 +1,7 @@
 # Energy Map (DRAFT — Austin to confirm)
 
+**PENDING: Austin's corrections (Friday evenings, weekend detail, peak focus hours, reflection window choice). Brain should ask for these at next weekly planning if still missing.**
+
 *Weekly availability + energy patterns + which task areas fit which windows. The brain uses this for slot-based planning and next-task suggestions. Drafted from conversation; Austin: correct and complete.*
 
 **Areas:** WORK (Aon) · DREEZY (freelance/product) · PERSONAL · HOME · SCARLETT (protected)

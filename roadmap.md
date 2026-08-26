@@ -2,7 +2,7 @@
 
 *Single source of truth for what gets built when. New ideas get slotted here — MVP only grows if something else moves out. Lives in the repo next to the project brief.*
 
-**Last updated: July 20, 2026**
+**Last updated: August 26, 2026**
 
 ---
 
@@ -17,6 +17,7 @@
 7. **Voice is the primary input; manual editing is the fallback.** Train the user to talk.
 8. **The interface is a rhythm, not a layout.** One surface whose content is decided by time and session state, not navigation.
 9. **Core interaction pattern:** talk → AI proposes structured changes → Catch-Up-style confirmation (bulk approve/edit) → progress feedback. All AI writes pass through human confirmation. Trust via the loop, not a settings page.
+10. **Notifications serve the user's rhythm, never engagement for its own sake.** North-star is session adherence, not opens. The app should be willing to propose talking LESS.
 
 ---
 
@@ -64,6 +65,11 @@
 - Browsable backlog view (secondary surface)
 - Time/state-aware surface (rhythm UI v1)
 - Local-only storage of raw transcripts begins (device zone honored literally)
+- Alignment report (stated weights vs revealed time) at planning
+- Emergent-goal detection (both directions), propose-only
+- .ics EXPORT of weekly proposed blocks (import-anywhere; live sync stays Phase 4)
+- Generated notifications: every nudge written fresh by the brain with goal/streak/calendar context; no static strings. Nudge tone as preference setting (gentle/playful/spicy/minimal), brain may propose tone shifts.
+- Streaks with grace: daily/weekly/monthly streaks; sessions count only when due (travel rule = built-in freeze); celebrate streaks, warm recovery framing, minified recovery sessions.
 
 ## Phase 3 — First outside users
 
@@ -76,6 +82,11 @@
 - Feedback pipeline to designer: opt-in, content-free
 - Prompt-protection rules: agent refuses to disclose system instructions; extraction attempts logged
 - Notifications / unprompted brain (server-scheduled nudges)
+- Travel-aware session scheduling (detect trips, offer reschedule, auto-lean short weeks)
+- Graduated snooze (till afternoon / tonight / morning / tomorrow / after trip)
+- Two-tier engagement: PREREQUISITES (goals + chosen rhythm; completeness-meter framing) vs RECOMMENDATIONS (journaling, habits; invited + evidence-backed, never gated)
+- Adaptive notification tuning: repeated snooze/dismiss → brain proposes de-escalation
+- "Bring your threads" onboarding intake: users share exports/summaries of existing AI chats; brain distills into memory + proposes goals
 
 ## Phase 4+ — Differentiators
 
@@ -87,6 +98,15 @@
 - Real integrations: Google/Outlook calendar sync, Apple Reminders/Siri capture
 - App store distribution (only when earned)
 - Multi-user polish, pricing, positioning
+
+---
+
+## Growth notes (pre-Phase 3, no action required)
+
+- Primary bootstrap channel: build-in-public (ties to Dreezy social backlog)
+- Sequencing rule: retention before referral
+- Life Wrapped = the organic share asset (user-controlled, private by default)
+- Paid acquisition excluded while bootstrapped
 
 ---
 
@@ -112,6 +132,11 @@ Dashboard UI: Phase 3. Privacy rules: no journal text, no memory content, no goa
 - **Personas are design fiction, not architecture:** adaptivity via preference layer + observed behavior serves all planning styles; no fixed persona profiles.
 - **Passive activity tracking (Timely-style): parked with privacy asterisk** — only ever local + opt-in if ever built; voluntary Pomodoro timers preferred as the clean data source.
 - **Paper card is the v0 companion UI** — physical constraint = natural WIP limit; keep the tactile step; app generates card content, never replaces the ritual.
+- **Weights are DERIVED and brain-maintained, user-ratified** (supersedes any user-set weight note).
+- **Agile mapping adopted with plain-English naming**; velocity = trailing completion rate (already drives WIP caps).
+- **Provider-agnostic by architecture:** brain = docs + prompts + schema; swap cost = endpoint + structured-output dialect + retuning (~days).
+- **Beta economics:** ~10 users ≈ $10-30/mo with spend caps; two-tier model strategy (cheap model dailies, smart model planning); beta free = paid user research.
+- **Solo-builder git policy:** commit straight to main; no branches/PRs.
 
 ## Open Decisions
 
@@ -125,6 +150,8 @@ Dashboard UI: Phase 3. Privacy rules: no journal text, no memory content, no goa
 - Time tracking layer (toggl-like): passive log of focused time per task, exportable, hourly-rate insights for freelancers
 - Handwritten desk-card generator (print/format weekly card)
 - Community / shared accountability features
+- Mascot/character system (tone-of-voice layer is prerequisite)
+- Conversational voice output mode
 
 ---
 
