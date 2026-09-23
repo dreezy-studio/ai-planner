@@ -1,0 +1,198 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------------------------------------------------
+// SQLite has no native enum type, so every "enum-like" field below is a
+// plain String. This comment block is the one place to check the allowed
+// values — a typo in casing (e.g. "personal" vs "Personal") would
+// otherwise silently create a group the UI doesn't recognize.
+//
+//   Goal.category    Personal | Career | Spiritual | Fatherhood | Health | Financial
+//   Goal.timeframe   vision | long-term | annual | monthly
+//   Goal.status      active | completed | paused | dropped
+//   Milestone.status active | completed | paused | dropped
+//   Task.area        Personal | Work | Dreezy | Home
+//   Task.state       backlog | ready | done | dropped
+//   Task.source      user | ai | meeting | import
+//   Task.priority    high | medium | low
+//   JournalEntry.type       daily | weekly | monthly | freeform
+//   Memory.category         values | patterns | preferences | context
+//   CheckinPrompt.type      daily | weekly | monthly
+//   Habit.cadence           daily | weekdays | weekly | custom
+//   Habit.status            active | paused | retired
+//   Anchor.status           active | retired
+//   Preference.createdFrom  chat | settings
+// -----------------------------------------------------------------------
+
+model Goal {
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  category     String
+  timeframe    String
+  parentGoalId String?   @map("parent_goal_id")
+  parentGoal   Goal?     @relation("GoalHierarchy", fields: [parentGoalId], references: [id])
+  childGoals   Goal[]    @relation("GoalHierarchy")
+  status       String
+  weight       Float?
+  targetDate   DateTime? @map("target_date")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  completedAt  DateTime? @map("completed_at")
+
+  milestones Milestone[]
+  tasks      Task[]
+  habits     Habit[]
+
+  @@map("goals")
+}
+
+model Milestone {
+  id          String    @id @default(cuid())
+  goalId      String    @map("goal_id")
+  goal        Goal      @relation(fields: [goalId], references: [id])
+  title       String
+  order       Int
+  status      String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  completedAt DateTime? @map("completed_at")
+
+  tasks Task[]
+
+  @@map("milestones")
+}
+
+model Task {
+  id               String     @id @default(cuid())
+  title            String
+  milestoneId      String?    @map("milestone_id")
+  milestone        Milestone? @relation(fields: [milestoneId], references: [id])
+  goalId           String?    @map("goal_id")
+  goal             Goal?      @relation(fields: [goalId], references: [id])
+  parentTaskId     String?    @map("parent_task_id")
+  parentTask       Task?      @relation("TaskHierarchy", fields: [parentTaskId], references: [id])
+  subtasks         Task[]     @relation("TaskHierarchy")
+  area             String
+  state            String
+  source           String
+  priority         String?
+  estimatedMinutes Int?       @map("estimated_minutes")
+  dueDate          DateTime?  @map("due_date")
+  createdAt        DateTime   @default(now()) @map("created_at")
+  completedAt      DateTime?  @map("completed_at")
+
+  @@map("tasks")
+}
+
+model JournalEntry {
+  id               String   @id @default(cuid())
+  type             String
+  transcript       String
+  summary          String?
+  isPrivate        Boolean  @default(false) @map("is_private")
+  rawStoredLocally Boolean  @default(false) @map("raw_stored_locally")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  memories Memory[]
+  anchors  Anchor[]
+
+  @@map("journal_entries")
+}
+
+model Memory {
+  id            String        @id @default(cuid())
+  category      String
+  content       String
+  sourceEntryId String?       @map("source_entry_id")
+  sourceEntry   JournalEntry? @relation(fields: [sourceEntryId], references: [id])
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  @@map("memory")
+}
+
+model CheckinPrompt {
+  id       String @id @default(cuid())
+  type     String
+  question String
+  order    Int
+
+  @@map("checkin_prompts")
+}
+
+model Habit {
+  id        String   @id @default(cuid())
+  title     String
+  goalId    String?  @map("goal_id")
+  goal      Goal?    @relation(fields: [goalId], references: [id])
+  cadence   String
+  status    String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  logs HabitLog[]
+
+  @@map("habits")
+}
+
+model HabitLog {
+  id      String   @id @default(cuid())
+  habitId String   @map("habit_id")
+  habit   Habit    @relation(fields: [habitId], references: [id])
+  date    DateTime
+  done    Boolean
+  note    String?
+
+  @@map("habit_logs")
+}
+
+model Anchor {
+  id            String        @id @default(cuid())
+  content       String
+  sourceEntryId String?       @map("source_entry_id")
+  sourceEntry   JournalEntry? @relation(fields: [sourceEntryId], references: [id])
+  status        String        @default("active")
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  @@map("anchors")
+}
+
+model Preference {
+  id          String   @id @default(cuid())
+  content     String
+  createdFrom String   @map("created_from")
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+
+  feedbackLogs FeedbackLog[]
+
+  @@map("preferences")
+}
+
+model FeedbackLog {
+  id                    String      @id @default(cuid())
+  feedbackText          String      @map("feedback_text")
+  resultingPreferenceId String?     @map("resulting_preference_id")
+  resultingPreference   Preference? @relation(fields: [resultingPreferenceId], references: [id])
+  createdAt             DateTime    @default(now()) @map("created_at")
+  shareWithDeveloper    Boolean     @default(false) @map("share_with_developer")
+
+  @@map("feedback_log")
+}
+
+model Event {
+  id           String   @id @default(cuid())
+  eventName    String   @map("event_name")
+  sessionId    String?  @map("session_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  numericValue Float?   @map("numeric_value")
+
+  @@map("events")
+}
