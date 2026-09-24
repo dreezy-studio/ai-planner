@@ -33,10 +33,10 @@ A designer / design systems manager with strong frontend skills (HTML/CSS/JS, so
 | Piece | Choice | What it is, plainly |
 |---|---|---|
 | App framework | **Next.js (React + TypeScript)** | One project that contains both the pages the user sees AND the behind-the-scenes code that talks to the database and to Claude. Since I know React, only the behind-the-scenes half is new. |
-| Database | **SQLite** (via Prisma) | The database is just a single file sitting in the project — like one Excel file with several linked tabs. No separate database service to sign up for or pay for. Prisma is the translator that lets our code read/write that file safely. |
+| Database | **Postgres** (via Prisma, hosted free on Neon through Vercel's Storage tab) | A real database server rather than a single file — needed once the app is reachable from the internet (a file-based database doesn't survive redeploys on serverless hosts like Vercel the way it would on a machine you fully control). Neon's free tier costs nothing at this scale. Prisma is the translator that lets our code read/write it safely. |
 | AI brain | **Anthropic API (Claude)** | Our server code sends Claude the user's goals + journal + tasks and gets back prioritization, breakdowns, and reflection responses. |
 | Styling | **Tailwind CSS** | Utility classes for styling. Familiar territory. |
-| Hosting (later) | **Railway** (Phase 4, not day one) | A service that keeps the app running on the internet so it works from my phone anywhere. Until then, the app runs on my Mac only. |
+| Hosting | **Vercel** (free tier) | A service that keeps the app running on the internet so it works from my phone anywhere, at no cost at this scale. Built by the same team as Next.js, so it's a natural fit. |
 
 **Rules:**
 - No user accounts / login in v1. Single user. (Add simple password protection only when deployed.)
@@ -183,13 +183,13 @@ intentional-os/
 
 ## 8. Build phases — do these in order, one at a time
 
-**Phase 1 — Skeleton + database.** Scaffold Next.js, set up Prisma + SQLite with the schema above, seed my real annual/monthly goals and check-in prompts, build the Goals screen with full add/edit/complete. *Done when: I can manage my real goal tree in the browser.*
+**Phase 1 — Skeleton + database.** Scaffold Next.js, set up Prisma + Postgres with the schema above, seed my real annual/monthly goals and check-in prompts, build the Goals screen with full add/edit/complete. *Done when: I can manage my real goal tree in the browser.*
 
 **Phase 2 — The brain, check-in mode.** Build the chat screen and the `/api/chat` brain route with full database context. Save journal entries + summaries + memory updates. *Done when: I can do a real weekly check-in and it's smarter than ChatGPT was, because it sees everything.*
 
 **Phase 3 — Planning + dashboard.** Goal-breakdown mode, "what should I focus on" mode, task suggestions from check-ins (with confirmation), and the Dashboard screen with priorities + progress %. *Done when: the app replaces my Notion weekly-planning ritual entirely.*
 
-**Phase 4 — Deploy.** Move to Railway so it works from my phone anywhere. Add a simple password. *Done when: I can check in from anywhere.*
+**Phase 4 — Deploy.** Move to Vercel so it works from my phone anywhere. Add a simple password. *Done when: I can check in from anywhere.* (Pulled forward into Build Session 1, ahead of the rest of Phase 1-3, so real data could be checked from a phone early.)
 
 Later (explicitly NOT now): custom voice recording, Apple Reminders/Siri capture, calendar sync, phone widget, notifications/nudges, multi-user.
 
@@ -201,5 +201,5 @@ Later (explicitly NOT now): custom voice recording, Apple Reminders/Siri capture
 - Before large or structural changes, propose a plan first and wait for approval (use Plan Mode).
 - Commit to git after every working step with a clear message.
 - When introducing any backend concept for the first time (API route, migration, environment variable, ORM, etc.), add a one-or-two-sentence plain-English explanation of what it does.
-- Never commit `.env` or the SQLite database file.
+- Never commit `.env` or any database credentials.
 - Keep dependencies minimal — question every new package.

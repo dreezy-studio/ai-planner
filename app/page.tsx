@@ -3,8 +3,9 @@ import { formatAge, goalProgressPercent, taskAgeDays } from "@/lib/progress";
 
 const AREA_ORDER = ["Personal", "Work", "Dreezy", "Home"] as const;
 
-// This page reads the database on every request — never pre-render it at
-// build time (the build container has no database to query against).
+// Task ages and progress % change with the passage of time alone, not just
+// with data edits — pre-rendering this page once at build/deploy time would
+// bake in a stale snapshot. Always render fresh, on every request.
 export const dynamic = "force-dynamic";
 
 export default async function Home() {

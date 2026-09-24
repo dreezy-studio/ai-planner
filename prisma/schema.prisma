@@ -7,13 +7,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 // -----------------------------------------------------------------------
-// SQLite has no native enum type, so every "enum-like" field below is a
-// plain String. This comment block is the one place to check the allowed
+// Every "enum-like" field below is a plain String rather than a native
+// Postgres enum, to keep this schema simple and match how it was first
+// built. This comment block is the one place to check the allowed
 // values — a typo in casing (e.g. "personal" vs "Personal") would
 // otherwise silently create a group the UI doesn't recognize.
 //

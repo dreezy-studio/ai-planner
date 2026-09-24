@@ -2,7 +2,7 @@
 
 *Single source of truth for what gets built when. New ideas get slotted here — MVP only grows if something else moves out. Lives in the repo next to the project brief.*
 
-**Last updated: August 26, 2026**
+**Last updated: September 24, 2026**
 
 ---
 
@@ -39,7 +39,7 @@
 
 **Goal: replaces the Notion planning ritual for one user (Austin).**
 
-- Next.js + SQLite + Prisma skeleton
+- Next.js + Postgres + Prisma skeleton
 - FULL five-phase schema from day one (schema-ahead policy): goals, milestones, tasks (with state: backlog|ready|done|dropped; source: user|ai|meeting|import; priority), journal_entries (is_private, raw_stored_locally), memory, checkin_prompts, habits, habit_logs, anchors, preferences, feedback_log, events
 - Goals screen: goal tree, progress % rollups (computed, not stored)
 - Check-in chat screen: session types (morning brief / daily reflection / weekly / monthly), phone dictation for voice
@@ -49,7 +49,7 @@
 - WIP-capped weekly planning (backlog → ready promotion)
 - Event tracking wired in, no dashboard: checkin started/completed, type, word counts, task/goal/milestone/habit events, session opens. North-star metric: planning-session adherence.
 - CSV task import/export
-- Deploy to Railway + simple password
+- Deploy to Vercel + simple password
 
 ## Phase 2 — Trust & shaping (single-user, maybe first testers; est. ~1 month part-time)
 
@@ -137,6 +137,7 @@ Dashboard UI: Phase 3. Privacy rules: no journal text, no memory content, no goa
 - **Provider-agnostic by architecture:** brain = docs + prompts + schema; swap cost = endpoint + structured-output dialect + retuning (~days).
 - **Beta economics:** ~10 users ≈ $10-30/mo with spend caps; two-tier model strategy (cheap model dailies, smart model planning); beta free = paid user research.
 - **Solo-builder git policy:** commit straight to main; no branches/PRs.
+- **Postgres (Neon, via Vercel) over SQLite+Railway for hosting, decided during Build Session 1:** SQLite's single-file model needs a persistent volume to survive redeploys, which meant a $5+/mo Railway plan. Swapping to a real database server costs nothing extra at this scale (Neon's free tier) and pairs natively with free Vercel hosting — same "rent, don't run infrastructure" economics posture as the Anthropic API, just applied to the database too. Local dev shares the one free database with production for now (simplest option for a single user); revisit only if that ever causes friction.
 
 ## Open Decisions
 
